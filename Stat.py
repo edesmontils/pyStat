@@ -11,9 +11,10 @@ Class to process statistics in a parallel context
 
 import multiprocessing as mp
 from queue import Empty
-import time
-from tools.Counter import *
-import csv
+
+from Counter import *
+
+
 #==================================================
 #==================================================
 #==================================================
@@ -144,6 +145,14 @@ class Stat:
 #==================================================
 #==================================================
 
+def now():
+    return fromISO(dt.datetime.utcnow().isoformat())
+#==================================================
+def date2str(date):
+    return date.__str__().replace(' ', 'T')[0:19]
+
+#==================================================
+
 if __name__ == '__main__':
     print('main')
     print(mp.cpu_count(),' proccesses availables')
@@ -153,7 +162,7 @@ if __name__ == '__main__':
     date = date2str(now())
 
     stat.put( '2017-04-22','ok') 
-    # time.sleep(2)
+
     counter = stat.get('2017-04-22')
     counter.print()
     stat.backup()
